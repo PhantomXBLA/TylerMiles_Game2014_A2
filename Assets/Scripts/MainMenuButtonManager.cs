@@ -27,8 +27,17 @@ public class MainMenuButtonManager : MonoBehaviour
 
         }
 
-        playButton.GetComponent<Button>().onClick.AddListener(OnPlayButtonPressed);
-        instructionsButton.GetComponent<Button>().onClick.AddListener(OnInstructionsButtonPressed);
+        if(playButton != null)
+        {
+            playButton.GetComponent<Button>().onClick.AddListener(OnPlayButtonPressed);
+
+        }
+
+        if(instructionsButton != null)
+        {
+            instructionsButton.GetComponent<Button>().onClick.AddListener(OnInstructionsButtonPressed);
+
+        }
     }
 
     // Update is called once per frame
@@ -44,5 +53,10 @@ public class MainMenuButtonManager : MonoBehaviour
     void OnInstructionsButtonPressed()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void OnBackButtonPressed()
+    {
+        SceneManager.LoadScene(0);
     }
 }

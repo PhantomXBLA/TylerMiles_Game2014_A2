@@ -46,7 +46,7 @@ public class MainMenuButtonManager : MonoBehaviour
         
     }
 
-    void OnPlayButtonPressed()
+    public void OnPlayButtonPressed()
     {
         SceneManager.LoadScene(1);
     }
@@ -58,5 +58,10 @@ public class MainMenuButtonManager : MonoBehaviour
     public void OnBackButtonPressed()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void OnGameOverButtonPressed()
+    {
+        SceneManager.LoadScene(3);
     }
 }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class TurretBulletController : MonoBehaviour
 {
-    float horizontalSpeed = 10;
+    float horizontalSpeed = -8;
     int damage = 10;
     public float transformX;
     public float transformY;

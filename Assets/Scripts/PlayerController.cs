@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         Move();
         CheckGrounded();
-        Debug.Log(rigidbody.velocity);
+        //Debug.Log(rigidbody.velocity);
     }
 
     public void Move()

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     GameObject MoveRightButton, MoveLeftButton, ShootButton, JumpButton;
 
     public GameObject bulletPrefab;
+    GameObject circleCast;
 
     Animator animator;
 
@@ -21,11 +22,14 @@ public class PlayerController : MonoBehaviour
 
     bool MoveRightDown = false, MoveLeftDown = false;
 
+    public LayerMask layerMask;
+
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        circleCast = this.gameObject.transform.GetChild(1).gameObject;
 
         GameObject[] allButtons = UnityEngine.Object.FindObjectsOfType<GameObject>();
 
@@ -58,17 +62,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(rigidbody.velocity.y == 0)
-        {
-            isGrounded = true;
-            animator.SetBool("isGrounded", true);
-        }
-        else
-        {
-            isGrounded = false;
-            animator.SetBool("isGrounded", false);
-
-        }
 
         if(rigidbody.velocity.x > 0)
         {
@@ -86,6 +79,8 @@ public class PlayerController : MonoBehaviour
         }
 
         Move();
+        CheckGrounded();
+        Debug.Log(rigidbody.velocity);
     }
 
     public void Move()
@@ -107,6 +102,21 @@ public class PlayerController : MonoBehaviour
         bulletPrefab.GetComponent<BulletController>().transformX = this.gameObject.transform.GetChild(0).transform.position.x;
         bulletPrefab.GetComponent<BulletController>().transformY = this.gameObject.transform.GetChild(0).transform.position.y;
         Instantiate(bulletPrefab);
+    }
+
+    private void CheckGrounded()
+    {
+        RaycastHit2D raycastHit = Physics2D.CircleCast(circleCast.transform.position, circleCast.GetComponent<CircleCollider2D>().radius, Vector2.down, this.gameObject.GetComponent<BoxCollider2D>().bounds.extents.y, layerMask);
+        isGrounded = raycastHit;
+
+        if(isGrounded == true)
+        {
+            animator.SetBool("isGrounded", true);
+        }
+        else
+        {
+            animator.SetBool("isGrounded", false);
+        }
     }
 
 

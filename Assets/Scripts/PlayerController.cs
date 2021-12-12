@@ -92,12 +92,12 @@ public class PlayerController : MonoBehaviour
     {
         if (MoveRightDown)
         {
-            rigidbody.velocity = new Vector2(playerSpeed, 0);
+            rigidbody.velocity = new Vector2(playerSpeed, rigidbody.velocity.y);
             transform.localScale = new Vector2(4, 4);
         }
         if (MoveLeftDown)
         {
-            rigidbody.velocity = new Vector2(-playerSpeed, 0);
+            rigidbody.velocity = new Vector2(-playerSpeed, rigidbody.velocity.y);
             transform.localScale = new Vector2(-4, 4);
 
         }

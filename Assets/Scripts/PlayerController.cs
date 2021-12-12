@@ -17,6 +17,11 @@ public class PlayerController : MonoBehaviour
 
     bool isGrounded = true;
 
+    float playerSpeed = 3;
+
+    bool MoveRightDown = false, MoveLeftDown = false;
+
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -44,8 +49,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        MoveRightButton.GetComponent<Button>().onClick.AddListener(OnMoveRightButtonPressed);
-        MoveLeftButton.GetComponent<Button>().onClick.AddListener(OnMoveLeftButtonPressed);
+        //MoveRightButton.GetComponent<Button>().onClick.AddListener(OnMoveRightButtonPressed);
+        //MoveLeftButton.GetComponent<Button>().onClick.AddListener(OnMoveLeftButtonPressed);
         ShootButton.GetComponent<Button>().onClick.AddListener(OnShootButtonPressed);
         JumpButton.GetComponent<Button>().onClick.AddListener(OnJumpButtonPressed);
     }
@@ -69,17 +74,34 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("isMoving", true);
         }
-        else
+
+        else if (rigidbody.velocity.x < 0)
+        {
+            animator.SetBool("isMoving", true);
+        }
+
+        else if(rigidbody.velocity.x == 0)
         {
             animator.SetBool("isMoving", false);
         }
+
+        Move();
     }
 
-    private void FixedUpdate()
+    public void Move()
     {
-        
-    }
+        if (MoveRightDown)
+        {
+            rigidbody.velocity = new Vector2(playerSpeed, 0);
+            transform.localScale = new Vector2(4, 4);
+        }
+        if (MoveLeftDown)
+        {
+            rigidbody.velocity = new Vector2(-playerSpeed, 0);
+            transform.localScale = new Vector2(-4, 4);
 
+        }
+    }
     void SpawnBullet()
     {
         bulletPrefab.GetComponent<BulletController>().transformX = this.gameObject.transform.GetChild(0).transform.position.x;
@@ -87,14 +109,27 @@ public class PlayerController : MonoBehaviour
         Instantiate(bulletPrefab);
     }
 
-    void OnMoveLeftButtonPressed()
-    {
-        Debug.Log("MoveLeft");
-    }
 
-    void OnMoveRightButtonPressed()
+    public void OnMoveRightButtonPressed()
     {
         Debug.Log("MoveRight");
+        MoveRightDown = true;
+    }
+    public void OnMoveRightButtonReleased()
+    {
+        Debug.Log("NotMoveRight");
+        MoveRightDown = false;
+    }
+
+    public void OnMoveLeftButtonPressed()
+    {
+        Debug.Log("MoveRight");
+        MoveLeftDown = true;
+    }
+    public void OnMoveLeftButtonReleased()
+    {
+        Debug.Log("NotMoveRight");
+        MoveLeftDown = false;
     }
 
     void OnJumpButtonPressed()

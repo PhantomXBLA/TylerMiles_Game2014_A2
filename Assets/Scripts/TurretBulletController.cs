@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             TurretBulletController
+Description:      This is the turret bullet controller which is the same as the player bullet controller, but it's for the turrets... remarkable
+Date last modified: Dec 12, 2021
+*/
+
 public class TurretBulletController : MonoBehaviour
 {
     float horizontalSpeed = -8;
-    int damage = 10;
     public float transformX;
     public float transformY;
     // Start is called before the first frame update
@@ -23,11 +30,6 @@ public class TurretBulletController : MonoBehaviour
     private void Move()
     {
         transform.position += new Vector3(horizontalSpeed, 0, 0.0f) * Time.deltaTime;
-    }
-
-    public int ApplyDamage()
-    {
-        return damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

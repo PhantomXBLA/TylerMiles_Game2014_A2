@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             TruckController.cs
+Description:      This is the TruckController script which controls when the truck should move, stop, go up or go horizontal
+Date last modified: Dec 12, 2021
+*/
 public class TruckController : MonoBehaviour
 {
 
@@ -36,6 +43,7 @@ public class TruckController : MonoBehaviour
 
         if(transform.position.y < 1.5)
         {
+            horizontalSpeed = -2;
             transform.position += new Vector3(0, -horizontalSpeed, 0.0f) * Time.deltaTime;
         }
         else

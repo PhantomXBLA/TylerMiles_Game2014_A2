@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             MainMenuButtonManager.cs
+Description:      This gets a reference to, and controls all buttons on the main menu
+Date last modified: Dec 12, 2021
+*/
+
 public class MainMenuButtonManager : MonoBehaviour
 {
     GameObject playButton;

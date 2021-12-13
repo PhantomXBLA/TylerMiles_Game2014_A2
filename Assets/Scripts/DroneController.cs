@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             DroneController.cs
+Description:      This controls how the drone behaves when it spawns in and/or spots the player
+Date last modified: Dec 12, 2021
+*/
 public class DroneController : MonoBehaviour
 {
     GameObject DroneEyesight;

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             PlayerController.cs
+Description:      This is the player controller. This controls how the player reacts to touch screen inputs, damage, shooting, animation, etc
+Date last modified: Dec 12, 2021
+*/
 
 public class PlayerController : MonoBehaviour
 {
@@ -93,6 +102,11 @@ public class PlayerController : MonoBehaviour
 
         scoreText.text = ("Score: " + score.ToString("D5"));
 
+        if(transform.position.y < -15)
+        {
+            LoseLife();
+        }
+
     }
 
     public void Move()
@@ -133,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     private void onPlayerHit()
     {
-        audioController.PlayPlayerHit();
+        
     }
 
 
@@ -170,10 +184,16 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void LoseLife()
+   public void LoseLife()
     {
+        audioController.PlayPlayerHit();
         lives--;
+        transform.position = new Vector2(-10f, -1.6f);
         LivesText.text = ("x" + lives);
+        if(lives == 0)
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 
     void OnShootButtonPressed()
@@ -189,7 +209,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.tag == "EnemyBullet")
         {
-            onPlayerHit();
+            LoseLife();
         }
     }
 

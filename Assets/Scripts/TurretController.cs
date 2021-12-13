@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             TurretController.cs
+Description:      This controls how the turret reacts when it's idle vs when it sees the player
+Date last modified: Dec 12, 2021
+*/
 public class TurretController : MonoBehaviour
 {
     float health = 30;

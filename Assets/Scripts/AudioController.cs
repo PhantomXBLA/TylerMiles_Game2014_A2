@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Full Name:        Tyler Miles
+Student ID:       101251005
+File:             AudioController.cs
+Description:      This is the Audio controller. It contains references to all the sounds in the play scene, and functions to play them.
+Date last modified: Dec 12, 2021
+*/
+
 public class AudioController : MonoBehaviour
 {
     // Start is called before the first frame update

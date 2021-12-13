@@ -24,6 +24,13 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask layerMask;
 
+    AudioController audioController;
+
+    public int score = 0;
+    public int lives = 3;
+
+    public Text scoreText;
+    public Text LivesText;
 
     void Start()
     {
@@ -57,6 +64,9 @@ public class PlayerController : MonoBehaviour
         //MoveLeftButton.GetComponent<Button>().onClick.AddListener(OnMoveLeftButtonPressed);
         ShootButton.GetComponent<Button>().onClick.AddListener(OnShootButtonPressed);
         JumpButton.GetComponent<Button>().onClick.AddListener(OnJumpButtonPressed);
+
+        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+        LivesText.text = ("x" + lives);
     }
 
     // Update is called once per frame
@@ -80,7 +90,9 @@ public class PlayerController : MonoBehaviour
 
         Move();
         CheckGrounded();
-        //Debug.Log(rigidbody.velocity);
+
+        scoreText.text = ("Score: " + score.ToString("D5"));
+
     }
 
     public void Move()
@@ -119,6 +131,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void onPlayerHit()
+    {
+        audioController.PlayPlayerHit();
+    }
+
 
     public void OnMoveRightButtonPressed()
     {
@@ -153,12 +170,27 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void LoseLife()
+    {
+        lives--;
+        LivesText.text = ("x" + lives);
+    }
+
     void OnShootButtonPressed()
     {
         animator.SetTrigger("ShootTrigger");
         Debug.Log("Shoot");
+        audioController.PlayPlayerShoot();
         SpawnBullet();
         
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "EnemyBullet")
+        {
+            onPlayerHit();
+        }
     }
 
 }

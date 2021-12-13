@@ -2,71 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour
+public class DroneController : MonoBehaviour
 {
-    float health = 30;
-    GameObject turretBarrel;
+    GameObject DroneEyesight;
     public LayerMask playerLayerMask;
     bool playerDetected;
-    bool canFire = true;
-    bool dead = false;
+    bool droneCharging;
+
+    float horizontalSpeed = -10;
+    float health = 50;
 
     Animator animator;
-    PlayerController playerController;
-    public GameObject turretBullet;
-
     AudioController audioController;
+    PlayerController playerController;
     // Start is called before the first frame update
     void Start()
     {
-        turretBarrel = this.gameObject.transform.GetChild(0).gameObject;
+        DroneEyesight = this.gameObject.transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         checkForPlayer();
+
+        if(droneCharging == true)
+        {
+            transform.position += new Vector3(horizontalSpeed, 0, 0.0f) * Time.deltaTime;
+        }
     }
 
     private void checkForPlayer()
     {
-        RaycastHit2D raycastHit = Physics2D.Linecast(turretBarrel.transform.position, new Vector2(turretBarrel.transform.position.x - 5, turretBarrel.transform.position.y), playerLayerMask);
+        RaycastHit2D raycastHit = Physics2D.Linecast(DroneEyesight.transform.position, new Vector2(DroneEyesight.transform.position.x - 8, DroneEyesight.transform.position.y), playerLayerMask);
         playerDetected = raycastHit;
 
 
         if (playerDetected == true)
         {
-            FireBullet();
+            droneCharging = true;
+            Debug.Log("PlayerSighted");
         }
-    }
-
-    void FireBullet()
-    {
-        if (canFire)
-        {
-            turretBullet.GetComponent<TurretBulletController>().transformX = turretBarrel.transform.position.x - 1;
-            turretBullet.GetComponent<TurretBulletController>().transformY = turretBarrel.transform.position.y;
-            Instantiate(turretBullet);
-            audioController.PlayTurretShoot();
-            canFire = false;
-            StartCoroutine(fireTimer());
-        }
-
-    }
-
-    IEnumerator fireTimer()
-    {
-        yield return new  WaitForSeconds(3);
-        canFire = true;
     }
 
     IEnumerator destroyTurret()
     {
-        dead = true;
-        canFire = false;
+        droneCharging = false;
         animator.SetTrigger("TurretDeath");
         audioController.PlayEnemyDeath2();
         yield return new WaitForSeconds(0.5f);
@@ -79,11 +64,12 @@ public class TurretController : MonoBehaviour
         {
             health -= 10;
             playerController.score += 50;
-            if (health <= 0 && dead == false)
+            if (health <= 0)
             {
-                playerController.score += 250;
+                playerController.score += 500;
                 StartCoroutine(destroyTurret());
             }
         }
     }
+
 }
